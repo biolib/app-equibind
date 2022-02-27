@@ -18,7 +18,7 @@ jobs:
                     fetch-depth: 2
 
             -   name: Build docker image
-                run: docker build -f equibind/docker/Dockerfile_biolib -t $LOCAL_DOCKER_TAG equibind
+                run: docker build -f equibind/Dockerfile -t $LOCAL_DOCKER_TAG equibind
 
             -   name: Setup Python
                 uses: actions/setup-python@v2
