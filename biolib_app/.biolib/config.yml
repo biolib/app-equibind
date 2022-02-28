@@ -5,7 +5,7 @@ modules:
         image: 'local-docker://app-equibind:latest'
         command: ""
         input_files:
-            - COPY / /input
+            - COPY / /input/
         output_files:
             - COPY /output/ /
             - COPY /output.md /
