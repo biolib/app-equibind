@@ -3,6 +3,7 @@ FROM nvidia/cuda:11.1-cudnn8-runtime-ubuntu18.04
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
       build-essential \
       wget \
+      unzip \
       && rm -rf /var/lib/apt/lists/*
 
 RUN wget -q -P /tmp \
@@ -15,4 +16,4 @@ ENV PATH="/opt/conda/bin:$PATH"
 RUN conda env create -f environment.yml
 COPY . .
 RUN chmod +x run.sh
-CMD ["/run.sh"]
+ENTRYPOINT ["/run.sh"]

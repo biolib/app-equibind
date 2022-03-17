@@ -2,10 +2,9 @@ biolib_version: 2
 
 modules:
     main:
-        image: 'local-docker://app-equibind:latest'
-        command: ""
+        image: 'local-docker://equibind:latest'
         input_files:
-            - COPY / /input
+            - COPY / /
         output_files:
             - COPY /output/ /
             - COPY /output.md /
@@ -14,12 +13,12 @@ modules:
 
 arguments:
     -
-        default_value: /input.fa
-        description: 'Enter sequence(s) in FASTA format: '
-        key: '--fasta'
-        key_value_separator: '='
+        default_value: /input.zip
+        description: 'Upload an input zip with the format found in the description: '
+        key: '--input-zip'
+        key_value_separator: ' '
         required: true
-        type: text-file
+        type: file
         
 main_output_file: /output.md
 
