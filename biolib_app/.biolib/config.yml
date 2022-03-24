@@ -5,7 +5,7 @@ modules:
         image: 'local-docker://equibind:latest'
         input_files:
             - COPY / /
-       output_files:
+        output_files:
             - COPY /output/ /
             - COPY /output.md /
         source_files: []
@@ -21,5 +21,3 @@ arguments:
         type: file
         
 main_output_file: /output.md
-
-

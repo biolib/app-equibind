@@ -1,1 +1,0 @@
-Done running EquiBind!

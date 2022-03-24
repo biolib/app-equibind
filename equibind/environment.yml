@@ -9,7 +9,7 @@ dependencies:
   - pytorch 1.10
   - torchvision
   - torchaudio
-  - dgl-cuda10.2
+  - dgl
   - rdkit
   - openbabel
   - biopython
@@ -22,6 +22,4 @@ dependencies:
   - icecream
   - matplotlib
   - tensorboard
-
-
 

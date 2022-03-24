@@ -1,4 +1,4 @@
-FROM nvidia/cuda:11.1-cudnn8-runtime-ubuntu18.04
+FROM nvidia/cuda:10.2-runtime-ubuntu18.04
 
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
       build-essential \
