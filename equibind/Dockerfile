@@ -16,4 +16,5 @@ ENV PATH="/opt/conda/bin:$PATH"
 RUN conda env create -f environment.yml
 COPY . .
 RUN chmod +x run.sh
+RUN mkdir -p /data/results/trajectories
 ENTRYPOINT ["/run.sh"]

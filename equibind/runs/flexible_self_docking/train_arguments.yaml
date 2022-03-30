@@ -133,7 +133,7 @@ scheduler_step_per_batch: false
 seed: 1
 seed_data: 1
 tensorboard_functions: []
-test_names: data/new_names
+test_names: data/input_names
 train_names: data/old_no_newL_train
 train_predictions_name:
 train_sampler:

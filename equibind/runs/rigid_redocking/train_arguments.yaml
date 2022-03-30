@@ -25,8 +25,9 @@ dataset_params:
   surface_max_neighbors: 5
   surface_mesh_cutoff: 2
   translation_distance: 5.0
-  use_rdkit_coords: false
+  use_rdkit_coords: true
   use_rec_atoms: false
+  geometry_regularization: true
 device: cuda
 eval_on_test: true
 eval_per_epochs: 0
@@ -119,7 +120,7 @@ scheduler_step_per_batch: false
 seed: 1
 seed_data: 1
 tensorboard_functions: []
-test_names: data/new_names
+test_names: data/input_names
 train_names: data/old_no_newL_train
 train_predictions_name:
 train_sampler:

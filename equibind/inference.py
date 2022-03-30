@@ -154,6 +154,7 @@ def inference(args, tune_args=None):
                 lig_graphs, rec_graphs, ligs_coords, recs_coords, all_rec_coords, pockets_coords_lig, geometry_graph, names, idx = tuple(
                     batch)
                 # if names[0] not in ['2fxs', '2iwx', '2vw5', '2wer', '2yge', ]: continue
+                
                 ligs_coords_pred, ligs_keypts, recs_keypts, rotations, translations, geom_reg_loss = model(lig_graphs,
                                                                                                            rec_graphs,
                                                                                                            complex_names=names,
@@ -194,7 +195,7 @@ def inference(args, tune_args=None):
             rmsds.append(rmsd)
         rmsds = np.array(rmsds)
         centroid_distsH = np.array(centroid_distsH)
-
+        print(rmsds)
         print('EquiBind-U with hydrogens inclduded in the loss')
         print('mean rmsd: ', rmsds.mean().__round__(2), ' pm ', rmsds.std().__round__(2))
         print('rmsd precentiles: ', np.percentile(rmsds, [25, 50, 75]).round(2))
@@ -205,7 +206,6 @@ def inference(args, tune_args=None):
         print('centroid precentiles: ', np.percentile(centroid_distsH, [25, 50, 75]).round(2))
         print(f'centroid_distances below 2: {(100 * (centroid_distsH < 2).sum() / len(centroid_distsH)).__round__(2)}%')
         print(f'centroid_distances below 5: {(100 * (centroid_distsH < 5).sum() / len(centroid_distsH)).__round__(2)}%')
-
         if args.run_corrections:
             rdkit_graphs, _ = load_graphs(
                 f'{data.processed_dir}/lig_graphs_rdkit_coords.pt')
@@ -368,7 +368,6 @@ def inference_from_files(args):
             model.load_state_dict(checkpoint['model_state_dict'])
             model.to(device)
             model.eval()
-
         with torch.no_grad():
             ligs_coords_pred_untuned, ligs_keypts, recs_keypts, rotations, translations, geom_reg_loss = model(
                 lig_graph.to(device), rec_graph.to(device), geometry_graph.to(device), complex_names=[name], epoch=0)
@@ -431,6 +430,7 @@ def inference_from_files(args):
                'targets': all_ligs_coords, 'lig_keypts': all_ligs_keypts, 'rec_keypts': all_recs_keypts,
                'names': all_names, 'intersection_losses_untuned': all_intersection_losses_untuned,
                'intersection_losses': all_intersection_losses}
+    #print(results)
     torch.save(results, path)
 
 
@@ -465,6 +465,7 @@ if __name__ == '__main__':
                 else:
                     arg_dict[key] = value
         args.model_parameters['noise_initial'] = 0
+       
         if args.inference_path == None:
             inference(args)
         else:
