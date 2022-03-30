@@ -19,5 +19,15 @@ arguments:
         key_value_separator: ' '
         required: true
         type: file
+    -   
+        default_value: 'flex'
+        description: 'Which pipeline to run for the docking'
+        key: '--docking'
+        key_value_separator: ' '
+        type: multiselect
+        required: False
+        options:
+            'Flexible self-docking': 'flex'
+            'Rigid re-docking': 'rigid'
         
 main_output_file: /output.md
