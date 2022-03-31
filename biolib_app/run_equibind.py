@@ -33,10 +33,8 @@ with open("inference.yml", "w") as inf:
     inf.write("use_rdkit_coords: False\n")
     inf.write("save_trajectories: true\n\n")
 
-    inf.write("num_confs: 1'\n")
+    inf.write("num_confs: 1\n")
 
-    
-    
 
 
 sys.exit(1)
