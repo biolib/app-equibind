@@ -14,7 +14,9 @@ RUN wget -q -P /tmp \
 COPY equibind/environment.yml .
 ENV PATH="/opt/conda/bin:$PATH"
 RUN conda env create -f environment.yml
-COPY . .
-RUN chmod +x equibind/run.sh
+COPY equibind equibind
+COPY biolib_app/run.sh .
+COPY biolib_app/run_equibind.py .
+RUN chmod +x run.sh
 RUN mkdir -p /data/results/trajectories
-ENTRYPOINT ["equibind/run.sh"]
+ENTRYPOINT ["/run.sh"]
