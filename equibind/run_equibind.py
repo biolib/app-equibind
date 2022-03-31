@@ -1,6 +1,6 @@
 import subprocess
 import argparse
-import os, sys
+import os, sys, shutil
 
 # read inputs provided by user
 parser = argparse.ArgumentParser()
@@ -11,11 +11,18 @@ args = parser.parse_args()
 os.makedirs('input/', exist_ok=True)
 os.makedirs('output/', exist_ok=True)
 
-
 subprocess.run([
     'unzip',
     args.input_zip,
 ])
+
+os.rename("input", "PDBBind")
+shutil.move('PDBBind', "data/")
+# Write input names:
+i_names = os.listdir("data/PDBBind/")
+with open("data/input_names", "w") as input_names:
+    for i in i_names:
+        input_names.write(i)
 
 # Write inference yml and call using --configs 
 with open("inference.yml", "w") as inf:
@@ -36,15 +43,27 @@ with open("inference.yml", "w") as inf:
     inf.write("num_confs: 1\n")
 
 
-
-sys.exit(1)
 subprocess.run([
     'python3',
-    'inference.py',
-    '--configs',
+    'inference_biolib.py',
+    '--config',
     'inference.yml',
     '--output_directory',
     'output/'])#,
 #    '--inference_path',
 #    'input/',
 #])
+
+import pandas as pd
+
+df_opt = pd.read_csv("equibind-opt_scoring.csv")
+
+with open("output.md", "w") as mdout:
+    mdout.write("# Equibind")
+    mdout.write("Equibind optmizied scoring:")
+    mdout.write(df_opt.to_markdown())
+
+    # Maybe link to donwloading the top 10 or top 1 sdf files + pdb file
+
+
+

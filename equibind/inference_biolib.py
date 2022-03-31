@@ -299,7 +299,25 @@ def inference(args, tune_args=None):
             print(f'mean kabsch RMSD: ', kabsch_rmsds_optimized.mean().__round__(2), ' pm ',
                   kabsch_rmsds_optimized.std().__round__(2))
             print('kabsch RMSD percentiles: ', np.percentile(kabsch_rmsds_optimized, [25, 50, 75]).round(2))
+            
+            import pandas as pd
+            dH = {'ID':names, 'RMSD':rmsds, 'Centroid-Dist': centroid_distsH,'Kabsch-RMSD':['NA']*len(centroid_distsH)}
+            dU = {'ID':names, 'RMSD':rmsdvals, 'Centroid-Dist':centroid_distsU, 'Kabsch-RMSD':kabsch_rmsds}
+            dopt = {'ID':names,'RMSD': rmsd_optimized, 'Centroid-Dist':centroid_dists, 'Kabsch-RMSD':kabsch_rmsds_optimized}
 
+            df_H = pd.DataFrame(data=dH)
+            df_U = pd.DataFrame(data=dU)
+            df_opt = pd.DataFrame(data=dopt)
+
+            # Sort by RMSD and then RMSDkabsch
+            df_H.sort_values(by=['RMSD'], ascending=True)
+            df_U.sort_values(by=['RMSD', 'Kabsch-RMSD'], ascending=True)
+            df_opt.sort_values(by=['RMSD', 'Kabsch-RMSD'], ascending=True)
+
+            # Save results
+            df_H.to_csv("equibind-H_scoring.csv")
+            df_U.to_csv("equibind-U_scoring.csv")
+            df_opt.to_csv("equibind-opt_scoring.csv")
 
 def inference_from_files(args):
     seed_all(args.seed)
@@ -335,7 +353,7 @@ def inference_from_files(args):
         if lig_names == []: raise ValueError(f'No ligand files found. The ligand file has to contain \'ligand\'.')
         if lig == None: raise ValueError(f'None of the ligand files could be read: {lig_names}')
         print(f'Docking the receptor {os.path.join(args.inference_path, name, rec_name)}\nTo the ligand {used_lig}')
-
+        
         rec, rec_coords, c_alpha_coords, n_coords, c_coords = get_receptor(rec_path, lig, cutoff=dp['chain_radius'])
         rec_graph = get_rec_graph(rec, rec_coords, c_alpha_coords, n_coords, c_coords,
                                   use_rec_atoms=dp['use_rec_atoms'], rec_radius=dp['rec_graph_radius'],
@@ -433,7 +451,7 @@ def inference_from_files(args):
     #print(results)
     torch.save(results, path)
 
-            
+
 if __name__ == '__main__':
     args = parse_arguments()
 
@@ -466,7 +484,13 @@ if __name__ == '__main__':
                     arg_dict[key] = value
         args.model_parameters['noise_initial'] = 0
        
-        if args.inference_path == None:
-            inference(args)
-        else:
-            inference_from_files(args)
+        #if args.inference_path == None:
+        # Now scoring!
+        print("Now scoring!...")
+        inference(args)
+        #else:
+        args.inference_path = "/data/PDBBind"
+        # Now creating the binding molecules
+        print("Now creating molecule binding... Using Equibind optimized RMSD values.")
+        inference_from_files(args)
+        print("Done!")
