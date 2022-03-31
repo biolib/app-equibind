@@ -11,7 +11,7 @@ RUN wget -q -P /tmp \
     && bash /tmp/Miniconda3-latest-Linux-x86_64.sh -b -p /opt/conda \
     && rm /tmp/Miniconda3-latest-Linux-x86_64.sh
 
-COPY environment.yml .
+COPY equibind/environment.yml .
 ENV PATH="/opt/conda/bin:$PATH"
 RUN conda env create -f environment.yml
 COPY . .
