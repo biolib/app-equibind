@@ -59,11 +59,10 @@ import pandas as pd
 df_opt = pd.read_csv("equibind-opt_scoring.csv")
 
 with open("output.md", "w") as mdout:
-    mdout.write("# Equibind")
-    mdout.write("Equibind optmizied scoring:")
+    mdout.write("# Equibind\n\n")
+    mdout.write("Equibind optmizied scoring:\n")
     mdout.write(df_opt.to_markdown())
 
     # Maybe link to donwloading the top 10 or top 1 sdf files + pdb file
-
 
 
