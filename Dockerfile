@@ -17,4 +17,4 @@ RUN conda env create -f environment.yml
 COPY equibind/ .
 RUN chmod +x run.sh
 RUN mkdir -p /data/results/trajectories
-ENTRYPOINT ["/run.sh"]
+#ENTRYPOINT ["/run.sh"]
