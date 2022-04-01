@@ -15,8 +15,8 @@ subprocess.run([
     'unzip',
     args.input_zip,
 ])
-
-os.rename("input", "PDBBind")
+input_name = str(args.input_zip).split('.')[0]
+os.rename(input_name, "PDBBind")
 shutil.move('PDBBind', "data/")
 # Write input names:
 i_names = os.listdir("data/PDBBind/")
@@ -56,11 +56,12 @@ subprocess.run([
 
 import pandas as pd
 
-df_opt = pd.read_csv("equibind-opt_scoring.csv")
+df_opt = pd.read_csv("scoring/equibind-opt_scoring.csv")
 
 with open("output.md", "w") as mdout:
     mdout.write("# Equibind\n\n")
-    mdout.write("Equibind optmizied scoring:\n")
+    mdout.write("---\n\n")
+    mdout.write("Equibind optmizied scoring:\n\n")
     mdout.write(df_opt.to_markdown())
 
     # Maybe link to donwloading the top 10 or top 1 sdf files + pdb file
