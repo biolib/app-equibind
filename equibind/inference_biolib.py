@@ -315,9 +315,9 @@ def inference(args, tune_args=None):
             df_opt.sort_values(by=['RMSD', 'Kabsch-RMSD'], ascending=True)
 
             # Save results
-            df_H.to_csv("equibind-H_scoring.csv",index=False)
-            df_U.to_csv("equibind-U_scoring.csv",index=False)
-            df_opt.to_csv("equibind-opt_scoring.csv",index=False)
+            df_H.to_csv("scoring/equibind-H_scoring.csv",index=False)
+            df_U.to_csv("scoring/equibind-U_scoring.csv",index=False)
+            df_opt.to_csv("scoring/equibind-opt_scoring.csv",index=False)
 
 def inference_from_files(args):
     seed_all(args.seed)

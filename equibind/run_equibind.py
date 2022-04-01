@@ -56,7 +56,7 @@ subprocess.run([
 
 import pandas as pd
 
-df_opt = pd.read_csv("equibind-opt_scoring.csv")
+df_opt = pd.read_csv("scoring/equibind-opt_scoring.csv")
 
 with open("output.md", "w") as mdout:
     mdout.write("# Equibind\n\n")
