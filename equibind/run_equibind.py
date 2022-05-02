@@ -4,16 +4,21 @@ import os, sys, shutil
 
 # read inputs provided by user
 parser = argparse.ArgumentParser()
-parser.add_argument('--input-zip', help="Zip folder containing input in the format described in Description")
+parser.add_argument('--prot', help="A single file or a zip folder containing input protein in PDB format")
+parser.add_argument('--binder', help="A single file or a zip folder containing input binder in .mol2 or .sdf format")
 parser.add_argument('--docking', nargs='*',help="Which docking to perform: flexible self-docking (flex) or rigid re-docking (rigid). Default: Flexible self-docking (flex)")
 args = parser.parse_args()
 
-os.makedirs('input/', exist_ok=True)
+os.makedirs('protein/', exist_ok=True)
 os.makedirs('output/', exist_ok=True)
 
 subprocess.run([
     'unzip',
-    args.input_zip,
+    args.pdb,
+])
+subprocess.run([
+    'unzip',
+    args.binder,
 ])
 
 os.rename("input", "PDBBind")
