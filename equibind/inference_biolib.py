@@ -628,5 +628,5 @@ if __name__ == '__main__':
         args.inference_path = "/data/PDBBind"
         # Now creating the binding molecules
         #print("Now creating molecule binding... Using Equibind optimized RMSD values.")
-        #inference_from_files(args)
+        inference_from_files(args)
         print("Done!")

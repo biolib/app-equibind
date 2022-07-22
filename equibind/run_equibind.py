@@ -9,7 +9,9 @@ parser.add_argument('--binder', help="A single file or a zip folder containing i
 parser.add_argument('--docking', nargs='*',help="Which docking to perform: flexible self-docking (flex) or rigid re-docking (rigid). Default: Flexible self-docking (flex)")
 args = parser.parse_args()
 
-os.makedirs('protein/', exist_ok=True)
+# TODO PDB can be a single file as well check if it ends with PDB or .zip:
+os.makedirs('pdb/', exist_ok=True)
+os.makedirs('binder/', exist_ok=True)
 os.makedirs('output/', exist_ok=True)
 
 subprocess.run([
